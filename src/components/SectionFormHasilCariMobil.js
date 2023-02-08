@@ -1,6 +1,7 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import "./SectionFormHasilCariMobil.css";
+import axios from "axios"
 
 const SectionFormHasilCariMobil = () => {
   const location = useLocation();
@@ -11,6 +12,9 @@ const SectionFormHasilCariMobil = () => {
     hargaMobil: currentValues.hargaMobil,
     statusMobil: currentValues.statusMobil,
   };
+
+  const [data, setData] = useState(null)
+  const [dataFilter, setDataFilter] = useState([])
   const [values, setValues] = useState(initialValues);
   const navigate = useNavigate();
 
@@ -21,6 +25,65 @@ const SectionFormHasilCariMobil = () => {
     });
   };
 
+
+  useEffect(() => {
+
+    
+    const url = "https://bootcamp-rent-cars.herokuapp.com"
+    const config = {
+      headers : {
+        access_token : "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImFkbWluQGJjci5pbyIsInJvbGUiOiJBZG1pbiIsImlhdCI6MTY2NTI0MjUwOX0.ZTx8L1MqJ4Az8KzoeYU2S614EQPnqk6Owv03PUSnkzc"
+      }
+    }
+    axios
+      .get(url+"/admin/car", config)
+      .then(res => {
+        setData(res.data)
+        console.log(res.data)
+      })
+      .catch(err => {
+        console.log(err)
+        
+      })
+  }, [])
+
+  useEffect(() => {
+    if(data) {
+        const {namaMobil, kategoriMobil, hargaMobil, statusMobil} = values
+          
+        const filterData = data.filter(res => {
+        
+          const filterNama = res.name.toLowerCase().match(namaMobil.toLowerCase())
+         
+          const filterKategori = res.category.toLowerCase().match(kategoriMobil.toLowerCase())
+
+          let filterHarga;
+          if(hargaMobil === "above400") {
+            filterHarga = res.price > 600000
+          } else if(hargaMobil === "under400") {
+            // lebih kecil
+            filterHarga = res.price < 400000
+          } else if(hargaMobil === "400600"){
+            //antara 400 - 600
+            filterHarga = res.price > 400000 && data.price < 400000
+          } else {
+            filterHarga = !res.price || res.price > 0
+          }
+
+          const filterStatus = res.status === statusMobil
+
+          return filterNama && filterKategori && filterKategori && filterStatus
+        })         
+        
+    } else {
+      console.log("gagal")
+    }
+    
+  }, [values,data])
+
+  
+
+  
   const handleSubmit = (e) => {
     e.preventDefault();
     values.statusMobil = values.statusMobil === "true" ? true : false;
@@ -57,8 +120,8 @@ const SectionFormHasilCariMobil = () => {
                 <select id="hargaMobil" name="hargaMobil" defaultValue={values.hargaMobil} onChange={handleInputChange} className="form-select" aria-label="Default select example">
                   <option value="default">Masukan Harga Sewa per Hari</option>
                   <option value="under400">&#60; Rp. 400.000</option>
-                  <option value="400600">Rp. 400.000 - Rp. 600.000</option>
-                  <option value="above400">&#62; Rp. 400.000</option>
+                  <option value="400-600">Rp. 400.000 - Rp. 600.000</option>
+                  <option value="above600">&#62; Rp. 600.000</option>
                 </select>
               </div>
               <div className="col-lg">

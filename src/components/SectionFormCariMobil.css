@@ -1,19 +1,24 @@
 /* Section Form Cari Mobil */
 
+
 #formPencarianCariMobil {
   margin-bottom: 120px;
   z-index: 5;
   position: relative;
-}
+  ;
+  
+} 
 
 #formPencarianCariMobil .form-box {
   border-radius: 8px;
   padding: 30px 24px 24px 24px;
   box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.15);
   transition: 0.3s ease;
-  z-index: 4;
+  z-index: 9999;
   background-color: #fff;
+  opacity: 1 !important;
   position: relative;
+  
 }
 #formPencarianCariMobil .form-box:focus-within {
   box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.7);

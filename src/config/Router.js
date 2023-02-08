@@ -1,7 +1,6 @@
 import { createBrowserRouter } from "react-router-dom";
 import RenderLayout from "./RenderLayout";
-import SectionHeroBannerCariMobil from "../components/SectionHeroBannerCariMobil";
-import SectionFormCariMobil from "../components/SectionFormCariMobil";
+import PageCariMobil from "../pages/cariMobil.js"
 import SectionPageTitle from "../Sections/SectionPageTitle";
 import SectionDetailMobil from "../components/SectionDetailMobil";
 import SectionFormDetailMobil from "../components/SectionFormDetailMobil";
@@ -16,7 +15,7 @@ export const router = createBrowserRouter([
   },
   {
     path: "/carimobil",
-    element: <RenderLayout children={[<SectionHeroBannerCariMobil />, <SectionFormCariMobil />]} />,
+    element: <RenderLayout  children={<PageCariMobil />} />,
   },
   {
     path: "/hasilcari",

@@ -1,6 +1,7 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "./SectionFormCariMobil.css";
+import axios from "axios";
 
 const initialValues = {
   namaMobil: "",
@@ -9,7 +10,10 @@ const initialValues = {
   statusMobil: false,
 };
 
-const SectionFormCariMobil = () => {
+
+
+const SectionFormCariMobil = ({onBlur, ofBlur}) => {
+  const [isBlur, setBlur] = useState(false)
   const [values, setValues] = useState(initialValues);
   const navigate = useNavigate();
 
@@ -20,14 +24,17 @@ const SectionFormCariMobil = () => {
     });
   };
 
+  
+  
   const handleSubmit = (e) => {
     e.preventDefault();
     values.statusMobil = values.statusMobil === "true" ? true : false;
     navigate("/hasilcari", { state: { namaMobil: values.namaMobil, kategoriMobil: values.kategoriMobil, hargaMobil: values.hargaMobil, statusMobil: values.statusMobil } });
   };
 
+
   return (
-    <section id="formPencarianCariMobil">
+    <section className={isBlur ? "blurActive" : ""} id="formPencarianCariMobil" onClick={onBlur} onChange={ofBlur}>
       <div className="container">
         <div className="row form-box">
           <div className="col-lg-12">
@@ -60,7 +67,7 @@ const SectionFormCariMobil = () => {
                     Masukan Harga Sewa per Hari
                   </option>
                   <option value="under400">&#60; Rp. 400.000</option>
-                  <option value="400600">Rp. 400.000 - Rp. 600.000</option>
+                  <option value="400-600">Rp. 400.000 - Rp. 600.000</option>
                   <option value="above400">&#62; Rp. 400.000</option>
                 </select>
               </div>
