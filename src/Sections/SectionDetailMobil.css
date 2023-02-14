@@ -5,9 +5,10 @@
   padding-bottom: 60px;
 }
 
+
 #detail-mobil .kolomKiriInner,
 #detail-mobil .kolomKananInner {
-  padding: 24px;
+  padding: 24px 24px 1vh 24px;
   background: #ffffff;
   box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.15);
   border-radius: 8px;
@@ -125,6 +126,11 @@
   }
 }
 
+
+.rowHarga > .hargaRow {
+  display: flex;
+  justify-content: space-between;
+}
 .tanggalSewa {
   margin: 3vh 0 !important;
 
@@ -145,19 +151,52 @@
 }
 
 .tombolPembayaran {
-  width: 80%;
+  width: 100%;
   color: #fff;
   font: Arial;
   font-weight: 700;
   font-size: 14px;
+  margin-top: 3vh !important;
   line-height: 20px;
   box-sizing: border-box;
   background-color: rgba(53, 176, 167, 0.2);
   border: none;
   padding: 7px 0;
 }
-/* End of Section Detail Mobil */
 
+@media screen and (max-width: 991px) {
+  .tanggalSewa > input  {
+    width: 100% !important; 
+  }  
+  .tombolPembayaran {
+      width: 100%;
+    }
+}
+
+@media screen and (max-width: 576px) {
+    .rowHarga {
+      position: fixed;
+      bottom: 0vh !important;
+      z-index: 999;
+      margin: 0 !important;
+      background-color: #EEEEEE;
+      width: 100% !important;
+      left: 0;
+      padding: 2vh 0;
+    
+    }
+    .rowHarga > .hargaRow {
+      width: 95%;
+      margin: auto
+    }
+    .rowHarga > .hargaRow > .priceTitle {
+      display: none;
+    }
+    .tombolPembayaran {
+      width: 90% !important;
+      margin: 0 auto  ;
+    }
+}
 .activeTombol {
   background-color: #5CB85F !important;
 }

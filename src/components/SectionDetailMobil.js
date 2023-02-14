@@ -77,7 +77,7 @@ const SectionDetailMobil = () => {
               <h3 className="detailSubtitle mb-0">{car.name}</h3>
               <p className="jumlahPenumpangText">
                 <img src={iconUsers} alt="icon User" className="iconPenumpang" />
-                {car.category}
+                6-8 Orang
               </p>
               <div className="row rowHarga">
                 <div className="col-lg-6 text-start">

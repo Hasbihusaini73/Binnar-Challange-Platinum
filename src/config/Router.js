@@ -7,6 +7,7 @@ import SectionFormDetailMobil from "../components/SectionFormDetailMobil";
 import PageHasilCari from "../pages/PageHasilCari";
 import PageHome from "../pages/PageHome";
 import PageDetailMobil from "../pages/PageDetailMobil";
+import PagePembayaran from "../components/pembayaran";
 
 export const router = createBrowserRouter([
   {
@@ -24,5 +25,9 @@ export const router = createBrowserRouter([
   {
     path: "/detailmobil",
     element: <RenderLayout children={[<PageDetailMobil />]} />,
+  },
+  {
+    path: "/pembayaran",
+    element: <RenderLayout children={[<PagePembayaran />]} />,
   },
 ]);

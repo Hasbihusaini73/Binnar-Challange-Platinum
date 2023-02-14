@@ -12,7 +12,7 @@ const initialValues = {
 
 
 
-const SectionFormCariMobil = ({onBlur, ofBlur}) => {
+const SectionFormCariMobil = () => {
   const [isBlur, setBlur] = useState(false)
   const [values, setValues] = useState(initialValues);
   const navigate = useNavigate();
@@ -34,7 +34,7 @@ const SectionFormCariMobil = ({onBlur, ofBlur}) => {
 
 
   return (
-    <section className={isBlur ? "blurActive" : ""} id="formPencarianCariMobil" onClick={onBlur} onChange={ofBlur}>
+    <section id="formPencarianCariMobil" >
       <div className="container">
         <div className="row form-box">
           <div className="col-lg-12">
@@ -81,7 +81,7 @@ const SectionFormCariMobil = ({onBlur, ofBlur}) => {
                 </select>
               </div>
               <div className="col-lg-1 submitColumn">
-                <button type="submit" className="btn btn-primary buttonSubmit">
+                <button  className="btn btn-primary buttonSubmit" >
                   Cari Mobil
                 </button>
               </div>

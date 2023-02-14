@@ -39,7 +39,7 @@ const SectionFormHasilCariMobil = () => {
       .get(url+"/admin/car", config)
       .then(res => {
         setData(res.data)
-        console.log(res.data)
+        
       })
       .catch(err => {
         console.log(err)
@@ -55,8 +55,8 @@ const SectionFormHasilCariMobil = () => {
         
           const filterNama = res.name.toLowerCase().match(namaMobil.toLowerCase())
          
-          const filterKategori = res.category.toLowerCase().match(kategoriMobil.toLowerCase())
-
+          // const filterKategori = res.category.match(kategoriMobil.toLowerCase())
+          const filterKategori = "hello"
           let filterHarga;
           if(hargaMobil === "above400") {
             filterHarga = res.price > 600000
@@ -75,9 +75,7 @@ const SectionFormHasilCariMobil = () => {
           return filterNama && filterKategori && filterKategori && filterStatus
         })         
         
-    } else {
-      console.log("gagal")
-    }
+    } 
     
   }, [values,data])
 

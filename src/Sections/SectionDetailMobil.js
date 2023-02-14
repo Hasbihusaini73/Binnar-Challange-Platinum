@@ -7,16 +7,23 @@ import iconUsers from "../assets/img/fi_users.png";
 import AirDatepicker from "air-datepicker";
 import en from "air-datepicker/locale/en";
 import "air-datepicker/air-datepicker.css";
+import { useNavigate } from "react-router-dom";
+
 
 const SectionDetailMobil = () => {
   // declaring variable
   const [car, setCar] = useState([]);
+  const [rangeDate, setRangeDate] = useState(null)
   const [durasi, setDurasi] = useState(0)
   const [active, setActive] = useState(false)
-  const location = useLocation().state;
-  const idMobil = location.idMobil
+  const navigate = useNavigate() 
+  const location = useLocation().state
+  const idMobil = location ? location.idMobil : null
   
 
+  const [data, setData] = useState({})
+  
+  
   const handleTanggal =  async (e) => {
     const {value} = e.target // 12/01/2022, 13/01/2022
     //logic menghitung tanggal
@@ -84,21 +91,55 @@ const SectionDetailMobil = () => {
       } else {
           hasil += dateEnd - dateStart
       }
-
+      setRangeDate([start, end])
       return hasil
     }
     setDurasi(lamaHari())
     
   }
+
+  function handlePembayaran(e) {
+    e.preventDefault()
+
+    if(durasi !== 0) {
+      if(durasi > 7) {
+        alert("Sewa mobil maksimal 7 hari")
+        return false
+      }
+      const months = ["Jan", "Feb", "Mar", "Apr", "Mei", "Juni", "Juli", "Agu", "Sep", "Okt", "Nov", "Des"]
+      
+      const [start, end] = rangeDate
+      
+      const monthStart = parseInt(start.split("/")[1])
+      const monthEnd = parseInt(end.split("/")[1])
+      
+      const dateStart = start.split("/")[0] + " " +  months[monthStart - 1] + " " + start.split("/")[2]
+      const dateEnd = end.split("/")[0] + " " +  months[monthEnd - 1] + " " + end.split("/")[2]
+
+      const config = {
+        state : {
+          tanggalMulai: dateStart,
+          tanggalAkhir: dateEnd,
+          mobil: car,
+          durasi
+        }
+      } 
+      
+      
+      navigate("/pembayaran", config)
+    } 
+  }
   
 
   useEffect(() => {
+    
     if(durasi === 0) {
       setActive(false)
     } else {
       setActive(true)
     }
   }, [durasi])
+
   // HIT API
   useEffect(() => {
     //get data from api
@@ -116,6 +157,10 @@ const SectionDetailMobil = () => {
     };
     
     const tanggalSewa = new AirDatepicker("#tanggalSewa", options);
+    
+    if(!idMobil) {
+      navigate("/cariMobil")
+    }
     
     axios
       .get(`${urlAPI}/admin/car/${idMobil}`, config)
@@ -188,17 +233,23 @@ const SectionDetailMobil = () => {
                   <label htmlFor="tanggalSewa" className="judulTanggal">Tentukan lama sewa mobil. (max 7hari)</label>
                   <input type="text" id="tanggalSewa" onSelect={handleTanggal} placeholder="Pilih tanggal mulai dan akhir sewa" readOnly /> 
               </div>
+
               <div className="row rowHarga">
-                <div className="col-lg-6 text-start">
+                <div className="hargaRow">
                   <h3 className="priceTitle">Total</h3>
+                  <h3 className="priceNumber">Rp. {durasi === 0 ? car.price : car.price * durasi} </h3>
                 </div>
                 
-                <div className="col-lg-6 text-end">
-                  <h3 className="priceNumber">Rp. {(durasi === 0 ? car.price : car.price * durasi)} </h3>
-                </div>
+
+                  
+
+                  <button className={"tombolPembayaran " + (active ? `activeTombol`: '')} onClick={handlePembayaran}> Lanjutkan Pembayaran</button>
+                
+
+                
               </div>
 
-              <button className={"tombolPembayaran " + (active ? `activeTombol`: '')}> Lanjutkan Pembayaran</button>              
+                            
             </div>
           </div>
         </div>
