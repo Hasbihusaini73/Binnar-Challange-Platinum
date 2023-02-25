@@ -131,6 +131,7 @@ const PembayaranFirst = (props) => {
                         
                         <div className="biayaLainnya itemDetail">
                             <p className="judulItem">Biaya Lainnya</p>
+
                             {biayaLainnya.map((item, index) => {
                                 return (
                                     <div className="containerItem" key={index}>
@@ -139,6 +140,8 @@ const PembayaranFirst = (props) => {
                                     </div>
                                 )
                             })}
+
+                            
                         </div>
                         <div className="itemDetail belumTermasuk">
                             <p className="judulItem">Belum Termasuk</p>

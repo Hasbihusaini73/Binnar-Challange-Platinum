@@ -19,3 +19,6 @@ export const { setFilters } = filterSlice.actions;
 export const selectFiltersState = (state) => state.filterGlobalState.filters;
 
 export default filterSlice.reducer;
+
+
+

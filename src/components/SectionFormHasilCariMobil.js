@@ -12,8 +12,8 @@ const SectionFormHasilCariMobil = () => {
     hargaMobil: currentValues.hargaMobil,
     statusMobil: currentValues.statusMobil,
   };
-
-  const [data, setData] = useState(null)
+  
+  const [data, setData] = useState("")
   const [dataFilter, setDataFilter] = useState([])
   const [values, setValues] = useState(initialValues);
   const navigate = useNavigate();
@@ -29,17 +29,21 @@ const SectionFormHasilCariMobil = () => {
   useEffect(() => {
 
     
+    
     const url = "https://bootcamp-rent-cars.herokuapp.com"
+
     const config = {
       headers : {
         access_token : "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImFkbWluQGJjci5pbyIsInJvbGUiOiJBZG1pbiIsImlhdCI6MTY2NTI0MjUwOX0.ZTx8L1MqJ4Az8KzoeYU2S614EQPnqk6Owv03PUSnkzc"
       }
     }
+
+
     axios
       .get(url+"/admin/car", config)
       .then(res => {
+        setDataFilter(res.data)
         setData(res.data)
-        
       })
       .catch(err => {
         console.log(err)
@@ -48,10 +52,10 @@ const SectionFormHasilCariMobil = () => {
   }, [])
 
   useEffect(() => {
-    if(data) {
+      if(data) {
         const {namaMobil, kategoriMobil, hargaMobil, statusMobil} = values
           
-        const filterData = data.filter(res => {
+        const filterData = dataFilter.filter(res => {
         
           const filterNama = res.name.toLowerCase().match(namaMobil.toLowerCase())
          
@@ -72,12 +76,18 @@ const SectionFormHasilCariMobil = () => {
 
           const filterStatus = res.status === statusMobil
 
-          return filterNama && filterKategori && filterKategori && filterStatus
+          return filterNama && filterHarga
         })         
-        
-    } 
+
+        // setData(filterData)
+        // console.log(dataFilter)
+        // setDataFilter(dataFilter)
+      } else {
+        // setData(dataFilter)
+      }
+      
     
-  }, [values,data])
+  }, [values])
 
   
 

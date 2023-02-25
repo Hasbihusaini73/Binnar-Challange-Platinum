@@ -114,6 +114,8 @@ export default function NextPembayaran(props) {
         const handleGambar = () => {
             const file = e.target.files[0]
             const splitExt = file.name.split(".")
+           
+            // logic selain gambar
             const ext = splitExt[splitExt.length - 1].toLowerCase()
             const allowExt = ["jpg", "jpeg", "png"]
             if(!allowExt.includes(ext)) {
@@ -121,14 +123,17 @@ export default function NextPembayaran(props) {
                 return false
             }
 
+            // logic jika melebihi 5mb
             const allowSize = 5000000 //5mb
             const size = file.size
             if(size > allowSize) {
                 alert("Ukuran Maksimal gambar 5mb")
                 return false
             }
+
             const urlImage = URL.createObjectURL(file)
             setImage(urlImage)
+            
             return true
         }
         const middle = handleGambar()

@@ -21,15 +21,15 @@ const SectionDetailMobil = () => {
   const idMobil = location ? location.idMobil : null
   
 
-  const [data, setData] = useState({})
+  // const [data, setData] = useState({})
   
   
   const handleTanggal =  async (e) => {
-    const {value} = e.target // 12/01/2022, 13/01/2022
+    const value = e.target.value // 12/01/2022, 13/01/2022
     //logic menghitung tanggal
     
     const [start, end] = value.split(",")
-    
+        
     if(!end ) {
       setDurasi(0)
       return false
@@ -38,15 +38,24 @@ const SectionDetailMobil = () => {
     const lamaHari = () => {
       let hasil = 0
       const [dateStart, monthStart, yearStart] = start.split("/")
+      // 12/01/2022
+
+      
       const [dateEnd, monthEnd, yearEnd] = end.split("/")
+      
       const intMonthStart = parseInt(monthStart)
       const intMonthEnd = parseInt(monthEnd)
 
-      // jika lebih dari 1 bulan 
+      // jika lebih dari 1 bulan"
+      // februari - maret
       if(monthStart !== monthEnd || yearStart !== yearEnd) {
         //jika berbeda hanya 1 bulan
-        const dateFake = new Date(yearStart, intMonthStart , 1)
-        dateFake.setDate(dateFake.getDate() - 1)
+
+        const dateFake = new Date(yearStart, intMonthStart , 1) // 01/02/2022
+        
+        
+        dateFake.setDate(dateFake.getDate() - 1) // 31/01/2022
+        
         // misal mulai dari tanggal 5 maret sampe 6 april
         // dateFake akan menghasilkan bulan start berikutnya (maret jadi april) tanggal 1 
         // dan akan dikurangi 1 hari untuk mengambil tanggal akhir maret ( 31 - 5 = 26) 
